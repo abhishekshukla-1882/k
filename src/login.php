@@ -1,15 +1,25 @@
 <?php
+session_start();
 require('./classes/DB.php');
 require('./classes/User.php');
 if(isset($_POST['login'])){
   $username = $_POST['email'];
   $password = $_POST['password'];
   // echo $username," ". $password;
-  $authen = 0;
+  
+  // $_session['login'] = array($username,$password,$authen);
+  if(!$_SESSION['login']){
+    $_SESSION['login'] = array();
+    // echo 'created';
+   
+    // echo "pushed";
+    // foreach($_SESSION['login'] as $k => $v){
+    //   echo $k, $v;
+    // }
+  }
   $sen = new User($username,$password,$authen);
   $sen->login($username,$password);
-
-}
+  }
 ?>
 
 <!doctype html>

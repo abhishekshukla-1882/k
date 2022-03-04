@@ -1,6 +1,66 @@
+<?php
+
+// Create connection
+// $conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+session_start();
+
+require('./classes/DB.php');
+require('./classes/update.php');
+if($_SESSION['login'][2]==0){
+  header('Location:classes/profile.php');
+}
+// include('./login.php');
+$sql = DB::getInstance()->prepare("SELECT * FROM user");
+$gd =$sql->execute();
+$fg  =$sql -> setFetchMode(PDO::FETCH_ASSOC);
+
+// foreach(new RecursiveArrayIterator($sql->fetchAll()) as $k => $v){
+//     // echo $k;
+//     echo $v['password'];
+// }
+// if (isset($_POST['approved'])) {
+//   // echo "GeeksforGeeks";
+//   $pid = $_POST['id'];
+  // echo $pid;
+if (isset($_POST['approved'])) {
+  // echo "GeeksforGeeks";
+  $pid = $_POST['id'];
+  // $sql = DB::getInstance()->prepare("UPDATE user SET authen=1 WHERE id=$pid");
+  // $gd =$sql->execute();
+  // $fg  =$sql -> setFetchMode(PDO::FETCH_ASSOC);
+  $vol = new update($pid);
+  $vol-> update();
+    // echo $pid;
+    // foreach(new RecursiveArrayIterator($sql->fetchAll()) as $k => $v){
+}
+      // if($v['id'] == $pid ){
+      //   $sql = DB::getInstance()->prepare("UPDATE user SET authen=1 WHERE id=$pid");
+      //   $gd =$sql->execute();
+      // }
+  
+//   }}
+  
+// }
+// foreach
+// $sql = "SELECT * FROM `user`";
+// $result = $conn->query($sql);
+
+// if ($result->num_rows > 0) {
+//   echo "<table><tr><th>ID</th><th>Name</th></tr>";
+//   // output data of each row
+//   while($row = $result->fetch_assoc()) {
+//     echo "<tr><td>".$row["id"]."</td><td>".$row["firstname"]." ".$row["lastname"]."</td></tr>";
+//   }
+//   echo "</table>";
+// } else {
+//   echo "0 results";
+// }
+// $conn->close();
+?>
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -9,8 +69,9 @@
     <title>Dashboard Template · Bootstrap v5.1</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/dashboard/">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
     <!-- Bootstrap core CSS -->
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -116,36 +177,50 @@
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
+            <th scope="col">Id</th>
+              <th scope="col">Username</th>
+              <th scope="col">password</th>
+              <th scope="col">Auth</th>
+              <th scope="col">Permission</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td>layout</td>
-            </tr>
+            <?php
+            $html = "";
+            foreach(new RecursiveArrayIterator($sql->fetchAll()) as $k => $v){
+              $html .='<form method="POST"><tr>
+              <td>'.$v['id'].'</td>
+              <td>'.$v['username'].'</td>
+              <td>'.$v['password'].'</td>
+              <td>'.$v['authen'].'</td>
+              <td><input type="hidden" name="id" value='.$v["id"].'><button type="submit" id="chan" value='.$v['id'].' name="approved" >Restrict</buttton></td>
+            </tr></form>';
+          }
+          // $('table').html($html);
+          $html .="";
+          echo $html;
+          
+            ?>
           </tbody>
+          
         </table>
       </div>
     </main>
   </div>
+
 </div>
+<?php 
 
+?>
+<!-- <script>
+  function change(){
+    pid= $_POST['pid'];
+    console.log('done',pid);
 
+  }
+
+</script> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>
 </html>
