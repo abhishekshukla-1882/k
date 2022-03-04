@@ -1,5 +1,6 @@
 <?php
     // require('DB.php');
+    session_start();
     class User extends DB
     {
         public string $username;
@@ -11,7 +12,7 @@
             // $this->user_id = $user_id;
             $this->username = $username;
             $this->password = $password;
-            $this->authen = $authen;
+            $this->authen = 0;
             // $this->email = $email;
         }
 
@@ -43,9 +44,15 @@
             }
             if($v){ 
                 if($v['authen']==1){
-                header('location:dashboard.php');
+                    array_push($_SESSION['login'],$v['username']);
+                    array_push($_SESSION['login'],$v['password']);
+                    array_push($_SESSION['login'],$v['authen']);
+                    header('location:dashboard.php');
                 }
                 else{
+                    array_push($_SESSION['login'],$v['username']);
+                    array_push($_SESSION['login'],$v['password']);
+                    array_push($_SESSION['login'],$v['authen']);
                     header('location:classes/profile.php');
 
                 }
@@ -56,6 +63,31 @@
             }
             
         }
-        // public function 
+        // public function dashboard(){
+        //     $sql = DB::getInstance()->prepare("SELECT * FROM user WHERE username='$username' and  password='$password'");
+        //     $gd =$sql->execute();
+        //     $fg  =$sql -> setFetchMode(PDO::FETCH_ASSOC);
+        //     html = '<thead>
+        //     <tr>
+        //     <th scope="col">Id</th>
+        //       <th scope="col">Username</th>
+        //       <th scope="col">password</th>
+        //       <th scope="col">Auth</th>
+        //       <th scope="col">Permission</th>
+        //     </tr>
+        //   </thead>';
+        //     foreach(new RecursiveArrayIterator($sql->fetchAll()) as $k => $v){
+        //         html .=  '<tbody>
+        //         <tr>
+        //           <td>1,001</td>
+        //           <td>random</td>
+        //           <td>data</td>
+        //           <td>placeholder</td>
+        //           <td>text</td>
+        //         </tr>';
+        //     }
+        //     html .='</tbody>';
+
+        // }
     }
 ?>
