@@ -4,7 +4,8 @@ require('./classes/User.php');
 if(isset($_POST['login'])){
   $username = $_POST['email'];
   $password = $_POST['password'];
-  echo $username," ". $password;
+  // echo $username," ". $password;
+  $authen = 0;
   $sen = new User($username,$password,$authen);
   $sen->login($username,$password);
 
