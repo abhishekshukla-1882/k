@@ -26,10 +26,11 @@ $fg  =$sql -> setFetchMode(PDO::FETCH_ASSOC);
 if (isset($_POST['approved'])) {
   // echo "GeeksforGeeks";
   $pid = $_POST['id'];
+  $auth = $_POST['auth'];
   // $sql = DB::getInstance()->prepare("UPDATE user SET authen=1 WHERE id=$pid");
   // $gd =$sql->execute();
   // $fg  =$sql -> setFetchMode(PDO::FETCH_ASSOC);
-  $vol = new update($pid);
+  $vol = new update($pid,$auth);
   $vol-> update();
     // echo $pid;
     // foreach(new RecursiveArrayIterator($sql->fetchAll()) as $k => $v){
@@ -193,7 +194,9 @@ if (isset($_POST['approved'])) {
               <td>'.$v['username'].'</td>
               <td>'.$v['password'].'</td>
               <td>'.$v['authen'].'</td>
-              <td><input type="hidden" name="id" value='.$v["id"].'><button type="submit" id="chan" value='.$v['id'].' name="approved" >Restrict</buttton></td>
+              <td><input type="hidden" name="id" value='.$v["id"].'>
+              <input type="hidden" name="auth" value='.$v["authen"].'>
+              <button type="submit" id="chan" value='.$v['id'].' name="approved" >Restrict</buttton></td>
             </tr></form>';
           }
           // $('table').html($html);
