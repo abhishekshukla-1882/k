@@ -11,8 +11,13 @@ require('./classes/User.php');
    $password = $_POST['password'];
    $authen= FALSE;
   //  echo $username;
+  if($username="" || $password = ""){
+    echo "Please Complete the form carefull ..feilds should  not be empty";
+  }
+  else{
   $sen = new User($username,$password,$authen);
   $sen->addUser();
+  }
  }
 ?>
 
@@ -25,6 +30,13 @@ require('./classes/User.php');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/dashboard/">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+
     <meta name="generator" content="Hugo 0.88.1">
     <title>Signin Template · Bootstrap v5.1</title>    
 
@@ -73,11 +85,13 @@ require('./classes/User.php');
       </label>
     </div>
     <button class="w-100 btn btn-lg btn-primary" name="submit" type="submit">Sign in</button>
+    <center><a href="login.php">LogIn</a>
     <p class="mt-5 mb-3 text-muted">&copy; CEDCOSS Technologies</p>
   </form>
 </main>
 
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     
   </body>
 </html>

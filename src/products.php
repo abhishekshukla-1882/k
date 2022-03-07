@@ -1,3 +1,28 @@
+<?php
+require('classes/DB.php');
+// require('classes/edit.php');
+$sql = DB::getInstance()->prepare("SELECT * FROM product");
+$gd =$sql->execute();
+$fg  =$sql -> setFetchMode(PDO::FETCH_ASSOC);
+
+// if(isset($_POST['edit'])){
+//   $id= $_POST['id_pro'];
+//   $name= $_POST['name_pro'];
+//   $price= $_POST['price_pro'];
+//   $category= $_POST['cat_pro'];
+//   echo $id,$name;
+
+
+//   // $edi = new edit($id,$name,$price,$category);
+//   // $edi -> update();
+// }
+
+
+
+
+?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -5,6 +30,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/dashboard/">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
     <meta name="generator" content="Hugo 0.88.1">
     <title>Dashboard Template · Bootstrap v5.1</title>
 
@@ -158,21 +188,52 @@
           <button type="submit" class="btn btn-primary">Search</button>
         </div>
         <div class="col-12">
-          <a class="btn btn-success" href="add-product.html">Add Product</a>
+          <a class="btn btn-success" href="add-product.php
+          ">Add Product</a>
         </div>
       </form>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">#</th>
+              <!-- <th scope="col">#</th> -->
               <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">Price</th>
+              <th scope="col">Category</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
+            <?php
+            
+            foreach(new RecursiveArrayIterator($sql->fetchAll()) as $k => $v){ 
+            ?>
+            <form method="POST" action="delete.php" ><tr>
+            <td><?php echo $v['id'] ?></td>
+            <td><?php echo $v['name'] ?></td>
+            <td><?php echo $v['price'] ?></td>
+            <td><?php echo $v['category'] ?></td>
+            <input type="hidden" name="id_pro" value="<?php echo $v['id'] ?>">
+            <input type="hidden" name="name_pro" value="<?php echo $v['name'] ?>">
+            <input type="hidden" name="price_pro" value="<?php echo $v['price'] ?>">
+            <input type="hidden" name="cat_pro" value="<?php echo $v['category'] ?>">
+            <td>
+              <button type="submit" name="edit" value="<?php $v['id'] ?>">Edit</button>
+              <button type="submit" name="delete" value="<?php $v['id'] ?>">Delete</button>
+            </td>
+              <tr>
+              </form>
+            <?php } ?>
+          </tbody>
+
+
+
+
+
+
+
+          <!-- <tbody>
             <tr>
               <td>1,001</td>
               <td>random</td>
@@ -187,7 +248,7 @@
               <td>visual</td>
               <td><a href="#">Edit</a>&nbsp;<a href="#">Delete</a></td>
             </tr>
-          </tbody>
+          </tbody> -->
         </table>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -203,7 +264,19 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>
 </html>
+<!-- $html .='<form method="POST"><tr>
+                <td>'.$v['id'].'</td>
+                <td>'.$v['name'].'</td>
+                <td>'.$v['price'].'</td>
+                <td>'.$v['category'].'</td>
+                <td> <a href="" data-pid="'.$v['id'].'"> Edit</a>/<a href="" data-pid="'.$v['id'].'">Delete</a></td>
+
+            </form>';
+          }
+          $html .="";
+          echo $html; -->

@@ -17,7 +17,15 @@
         }
 
         public function addUser(){
-    
+            // $sql = DB::getInstance()->prepare("SELECT * FROM user");
+            // $sql->execute();
+            // $sql -> setFetchMode(PDO::FETCH_ASSOC);
+            // foreach(new RecursiveArrayIterator($sql->fetchAll()) as $k => $v){
+            //     if($v['username'] == $this->username){
+            //         echo "Username already Exist";
+            //         break;
+            //     }
+            // }
             DB::getInstance()->exec("INSERT INTO user (username,password,authen) VALUES ('$this->username', '$this->password', '$this->authen')");
             
         }
@@ -25,19 +33,7 @@
             $sql = DB::getInstance()->prepare("SELECT * FROM user WHERE username='$username' and  password='$password'");
             $gd =$sql->execute();
             $fg  =$sql -> setFetchMode(PDO::FETCH_ASSOC);
-            // echo "<pre>";
-            // print_r($fg['username']);
-            // echo "</pre>";
-            // if($fg){
-            //     header('location:classes/profile.php');
-
-            // }
-            // else{
-            //     echo "Authentication Wrong";
-            // }
-
-            // echo "mila";
-            // $count = mysqli_num_rows($sql);
+         
             foreach(new RecursiveArrayIterator($sql->fetchAll()) as $k => $v){
                 // echo $k;
                 // echo $v['password'];
